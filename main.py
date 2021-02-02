@@ -18,6 +18,15 @@ def delete_order_id_user_input(json_configuration):
         if order_id_to_delete.isdigit():
             print(f"Status: Deleting {order_id_to_delete} from database {json_configuration['database_name']}.")
             delete_order_id_into_database(order_id_to_delete, json_configuration)
+                  
+    elif order_id_to_delete.endswith(".txt"):
+            print(f"File .txt found for {order_id_to_delete}")
+            order_id_to_delete_in_file = open(order_id_to_delete, "r")
+            order_id_contents = order_id_to_delete_in_file.read().replace("\n", "','")
+
+            if len(order_id_contents) > 0:
+                delete_order_id_into_database(order_id_contents, json_configuration)
+                  
         else:
             print(f"Error: Input {order_id_to_delete} is not a number! Please try again!")
 
